@@ -34,7 +34,7 @@ good = [
     'ccp',
     'russia',
     'jinping',
-    'xii',
+    'xi',
 
 ]
 
