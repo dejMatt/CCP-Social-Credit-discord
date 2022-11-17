@@ -16,27 +16,11 @@ with open('data.json', 'r') as fp:
 
 
 #All of the info needed to figure out what's what
-bad = [
-    'tiannamen',
-    'pooh',
-    'protest',
-    'genocide',
-    'capitalism',
-    'taiwan',
-    'tiananmen',
-    'uyghurs',
-    'rights',
-]
-good = [
-    'communism',
-    'cena',
-    'china',
-    'ccp',
-    'russia',
-    'jinping',
-    'xi',
+with open('bad.json', 'r') as fp:
+    bad = json.load(fp)
 
-]
+with open('good.json', 'r') as fp:
+    good = json.load(fp)
 
 punctuation = ['!', '?', '.', ',', '`', '~', '@', '#', '$', '%', '&', '*', '(', ')']
 
