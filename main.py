@@ -15,7 +15,7 @@ with open('data.json', 'r') as fp:
     social_credits = json.load(fp)
 
 
-#All of the info needed to figure out what's what
+##Opening the JSON files containing the "Good" or "bad" words
 with open('bad.json', 'r') as fp:
     bad = json.load(fp)
 
@@ -29,7 +29,8 @@ punctuation = ['!', '?', '.', ',', '`', '~', '@', '#', '$', '%', '&', '*', '(', 
 async def on_ready():
     print(f"Logged in as {bot.user}")
 
-#Credit Command
+##TODO: Create a word suggest command
+##Credit Command
 @bot.slash_command(name="get_credit", description="Get your current social credit")
 async def get_credit(ctx):
     auth = str(ctx.author)
@@ -37,7 +38,7 @@ async def get_credit(ctx):
     print(auth)
     await ctx.respond('You have %s social credit' % (value))
 
-#Leaderboard command
+##Leaderboard command
 @bot.slash_command(name="leaderboard", description="Show global social credit rankings")
 async def leaderboard(ctx):
     leaderb0 = dict(sorted(social_credits.items(), key=lambda item: item[1], reverse=True))
