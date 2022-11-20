@@ -8,12 +8,16 @@ import json
 intents = discord.Intents.default()
 intents.message_content = True
 
+goodness = ''
+
+suggestion = ''
+
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 bot = discord.Bot(intents=intents)
+
 with open('data.json', 'r') as fp:
     social_credits = json.load(fp)
-
 
 ##Opening the JSON files containing the "Good" or "bad" words
 with open('bad.json', 'r') as fp:
@@ -24,19 +28,60 @@ with open('good.json', 'r') as fp:
 
 punctuation = ['!', '?', '.', ',', '`', '~', '@', '#', '$', '%', '&', '*', '(', ')']
 
+user = bot.fetch_user('276152435175849985')
+
+##Failed attempt at geting cool buttons to work, may revisit
+
+##class MyView(discord.ui.View):
+
+   ##@discord.ui.button(label='Good', style=discord.ButtonStyle.primary)
+    ##async def first_button_callback(self, button, interaction, goodness):
+        ##await interaction.response.send_message('You selected good', ephemeral=True)
+        ##goodness = 'good'
+
+
+
+    ##@discord.ui.button(label='Bad', style=discord.ButtonStyle.primary)
+    ##async def second_button_callback(self, button, interaction, goodness):
+        ##await interaction.response.send_message('You selected bad', ephemeral=True)
+        ##goodness = 'bad'
+
 
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user}")
+    user = await bot.fetch_user('276152435175849985')
+    await user.send('Bot is working ish')
 
-##TODO: Create a word suggest command
+
+##Word suggest commands
+@bot.slash_command(name="suggest_good", description="Suggest new good words to detect!")
+async def suggest(ctx, suggestion = discord.Option(name='suggestion')):
+    goodness = 'good '
+    suggestion = suggestion.lower
+    suggestions = {goodness:suggestion}
+    await ctx.response.send_message('You suggested %s' % suggestion, ephemeral=True)
+    user = await bot.fetch_user('276152435175849985')
+    await user.send(suggestions)
+
+@bot.slash_command(name="suggest_bad", description="Suggest new bad words to detect!")
+async def suggest(ctx, suggestion = discord.Option(name='suggestion')):
+    goodness = 'bad '
+    suggestion = suggestion.lower
+    suggestions = {goodness:suggestion}
+    await ctx.response.send_message('You suggested %s' % suggestion, ephemeral=True)
+    user = await bot.fetch_user('276152435175849985')
+    await user.send(suggestions)
+
+
+
 ##Credit Command
 @bot.slash_command(name="get_credit", description="Get your current social credit")
 async def get_credit(ctx):
     auth = str(ctx.author)
     value = social_credits.get(auth)
     print(auth)
-    await ctx.respond('You have %s social credit' % (value))
+    await ctx.respond('%You have s social credit' % (value), ephemeral=True)
 
 ##Leaderboard command
 @bot.slash_command(name="leaderboard", description="Show global social credit rankings")
@@ -61,10 +106,10 @@ async def on_message(message): #usual check it's not the bot yada yada
     if message.author.bot:
         return
     lower = message.content.lower()
-    messa = lower  #splitting words and getting rid of punctuation
+    msg = lower  #splitting words and getting rid of punctuation
     translation_table = str.maketrans('', '', ''.join(punctuation))
-    messa = messa.translate(translation_table)
-    words = re.split("\s", messa)
+    msg = msg.translate(translation_table)
+    words = re.split("\s", msg)
     if (set(bad) & set(words)): #bad response
         neg = [
             'That is not right citizen!',
@@ -87,6 +132,7 @@ async def on_message(message): #usual check it's not the bot yada yada
             social_credits.update({authr: value})
             scdiff = social_credits
             print(scdiff)
+            await message.channel.send('-100 Social Credits')
             with open('data.json', 'w') as fp:
                 json.dump(scdiff, fp)
             return
@@ -118,6 +164,7 @@ async def on_message(message): #usual check it's not the bot yada yada
             social_credits.update({authr: value})
             scdiff = social_credits
             print(scdiff)
+            await message.channel.send('+100 Social Credit')
             with open('data.json', 'w') as fp:
                 json.dump(scdiff, fp)
             return
