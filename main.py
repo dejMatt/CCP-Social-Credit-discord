@@ -28,8 +28,7 @@ with open('good.json', 'r') as fp:
 
 punctuation = ['!', '?', '.', ',', '`', '~', '@', '#', '$', '%', '&', '*', '(', ')']
 
-#Replace 0000 with your discord ID
-user = bot.fetch_user('0000')
+user = bot.fetch_user('351859727568994314')
 
 ##Failed attempt at geting cool buttons to work, may revisit
 
@@ -51,8 +50,7 @@ user = bot.fetch_user('0000')
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user}")
-    #Replace 0000 with your discord ID
-    user = await bot.fetch_user('0000')
+    user = await bot.fetch_user('351859727568994314')
     await user.send('Bot is working ish')
 
 
@@ -63,18 +61,16 @@ async def suggest(ctx, suggestion = discord.Option(name='suggestion')):
     suggestion = suggestion.lower
     suggestions = {goodness:suggestion}
     await ctx.response.send_message('You suggested %s' % suggestion, ephemeral=True)
-    #Replace 0000 with your discord ID
-    user = await bot.fetch_user('0000')
+    user = await bot.fetch_user('351859727568994314')
     await user.send(suggestions)
 
 @bot.slash_command(name="suggest_bad", description="Suggest new bad words to detect!")
 async def suggest(ctx, suggestion = discord.Option(name='suggestion')):
-    goodness = 'bad '
+    goodness = 'bad'
     suggestion = suggestion.lower
     suggestions = {goodness:suggestion}
     await ctx.response.send_message('You suggested %s' % suggestion, ephemeral=True)
-    #Replace 0000 with your discord ID
-    user = await bot.fetch_user('0000')
+    user = await bot.fetch_user('351859727568994314')
     await user.send(suggestions)
 
 
@@ -100,7 +96,27 @@ async def leaderboard(ctx):
     embed.add_field(name='ZE RANKINGS', value="\n".join('%03d %s' % (i, s) for i, s in enumerate(Leaderb, 1)))
     await ctx.respond(embed=embed)
 
+##Re-educaiton camp
+@bot.slash_command(name="reeducation", description="Please report to the nearest reeducation camp immediately")
+async def reeducation(ctx):
+    await ctx.respond('Please report to your nearest reeducation camp immediately')
 
+##eatbug
+@bot.slash_command(name="eatbug", description="Eat the bug. Yum Yum.")
+async def eatbug(ctx):
+    await ctx.respond('Eat the bug. Yum Yum.')
+
+##Gaslight
+@bot.slash_command(name="gaslight", description="Gaslight")
+async def gaslight(ctx):
+    neg = [
+        'What the fuck are you talking about',
+        'Youre a fucking idiot',
+        'Not its not'
+    ]
+    responce = random.choice(neg)
+    await ctx.respond(responce)
+    
 @bot.event
 async def on_message(message): #usual check it's not the bot yada yada
     with open ('data.json', 'r') as fp:
@@ -116,10 +132,10 @@ async def on_message(message): #usual check it's not the bot yada yada
     words = re.split("\s", msg)
     if (set(bad) & set(words)): #bad response
         neg = [
-            'That is not right citizen!',
-            "I'm sorry, I don't think that happened.",
-            'No',
-            'Nothing Happened',
+            'You must report to the nearest reeducation camp immediately',
+            #' ',
+            'This is not correct',
+            #' ',
             '*Hits with gun*',
         ]
         response = random.choice(neg)
@@ -150,7 +166,7 @@ async def on_message(message): #usual check it's not the bot yada yada
                 json.dump(scdiff, fp)
     if (set(good) & set(words)): #good response
         pos = [
-            'Nice citizen!',
+            'Good citizen!',
             'Keep doing your part!',
             '*Tips hat*',
             '*Smiles and nods*',
