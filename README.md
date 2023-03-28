@@ -13,7 +13,12 @@ git clone https://github.com/0xGingi/CCP-Social-Credit-discord
 cd CCP-Social-Credit-discord
 pip3 -r requirements.txt
 ```
-In the main.py file, replace my discord user id with yours where required
+Add Your Discord Bot Token:
+```
+mv .example.env .env
+nano .env 
+```
+In the main.py file, replace my discord user id with yours where required.
 Now invite the discord bot to your server and give basic permissions needed to read/send messages
 ```
 python3 main.py
