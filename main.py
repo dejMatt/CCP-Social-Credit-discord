@@ -58,20 +58,20 @@ async def on_ready():
 @bot.slash_command(name="suggest_good", description="Suggest new good words to detect!")
 async def suggest(ctx, suggestion = discord.Option(name='suggestion')):
     goodness = 'good '
-    suggestion = suggestion.lower
-    suggestions = {goodness:suggestion}
+    suggestion = suggestion
+    suggestions = suggestion
     await ctx.response.send_message('You suggested %s' % suggestion, ephemeral=True)
     user = await bot.fetch_user('351859727568994314')
-    await user.send(suggestions)
+    await user.send('Good Suggestion: %s' % suggestions)
 
 @bot.slash_command(name="suggest_bad", description="Suggest new bad words to detect!")
 async def suggest(ctx, suggestion = discord.Option(name='suggestion')):
     goodness = 'bad'
-    suggestion = suggestion.lower
-    suggestions = {goodness:suggestion}
+    suggestion = suggestion
+    suggestions = suggestion
     await ctx.response.send_message('You suggested %s' % suggestion, ephemeral=True)
     user = await bot.fetch_user('351859727568994314')
-    await user.send(suggestions)
+    await user.send('Bad Suggestion: %s' % suggestions)
 
 
 
@@ -93,7 +93,7 @@ async def leaderboard(ctx):
     Leaderb = leaderb3.split(",")
     print(Leaderb)
     embed = discord.Embed(title="Leaderboard", description="The overall social credit rankings", color=discord.Colour.red())
-    embed.add_field(name='ZE RANKINGS', value="\n".join('%03d %s' % (i, s) for i, s in enumerate(Leaderb, 1)))
+    embed.add_field(name='排行榜', value="\n".join('%01d %s' % (i, s) for i, s in enumerate(Leaderb, 1)))
     await ctx.respond(embed=embed)
 
 ##Re-educaiton camp
@@ -111,11 +111,17 @@ async def eatbug(ctx):
 async def gaslight(ctx):
     neg = [
         'What the fuck are you talking about',
-        'Youre a fucking idiot',
-        'Not its not'
+        'You are a fucking idiot',
+        'Not it is not',
+        'I love you and I will never leave you'
     ]
     responce = random.choice(neg)
     await ctx.respond(responce)
+
+##save
+@bot.slash_command(name="save", description="Remind Jacob to Save Sharepoint")
+async def eatbug(ctx):
+    await ctx.respond('Reminding Jacob to Save Sharepoint')
     
 @bot.event
 async def on_message(message): #usual check it's not the bot yada yada
