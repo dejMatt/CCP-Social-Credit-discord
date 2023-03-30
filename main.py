@@ -55,24 +55,21 @@ async def on_ready():
     await user.send('Bot is working ish')
 
 
-##Word suggest commands
+##Word suggest commands (made better thanks to @0xGingi
 @bot.slash_command(name="suggest_good", description="Suggest new good words to detect!")
 async def suggest(ctx, suggestion = discord.Option(name='suggestion')):
-    goodness = 'good '
-    suggestion = suggestion.lower
-    suggestions = {goodness:suggestion}
+    suggestion = suggestion
     await ctx.response.send_message('You suggested %s' % suggestion, ephemeral=True)
     user = await bot.fetch_user(owner)
-    await user.send(suggestions)
+    await user.send('Good Suggestion: %s' %suggestion)
+
 
 @bot.slash_command(name="suggest_bad", description="Suggest new bad words to detect!")
 async def suggest(ctx, suggestion = discord.Option(name='suggestion')):
-    goodness = 'bad '
-    suggestion = suggestion.lower
-    suggestions = {goodness:suggestion}
+    suggestion = suggestion
     await ctx.response.send_message('You suggested %s' % suggestion, ephemeral=True)
     user = await bot.fetch_user(owner)
-    await user.send(suggestions)
+    await user.send('Bad Suggestion: %s' %suggestion)
 
 
 
