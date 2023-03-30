@@ -15,6 +15,7 @@ suggestion = ''
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 bot = discord.Bot(intents=intents)
+owner = os.getenv('OWNER_ID')
 
 with open('data.json', 'r') as fp:
     social_credits = json.load(fp)
@@ -28,7 +29,7 @@ with open('good.json', 'r') as fp:
 
 punctuation = ['!', '?', '.', ',', '`', '~', '@', '#', '$', '%', '&', '*', '(', ')']
 
-user = bot.fetch_user('276152435175849985')
+user = bot.fetch_user(owner)
 
 ##Failed attempt at geting cool buttons to work, may revisit
 
@@ -50,7 +51,7 @@ user = bot.fetch_user('276152435175849985')
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user}")
-    user = await bot.fetch_user('276152435175849985')
+    user = await bot.fetch_user(owner)
     await user.send('Bot is working ish')
 
 
@@ -61,7 +62,7 @@ async def suggest(ctx, suggestion = discord.Option(name='suggestion')):
     suggestion = suggestion.lower
     suggestions = {goodness:suggestion}
     await ctx.response.send_message('You suggested %s' % suggestion, ephemeral=True)
-    user = await bot.fetch_user('276152435175849985')
+    user = await bot.fetch_user(owner)
     await user.send(suggestions)
 
 @bot.slash_command(name="suggest_bad", description="Suggest new bad words to detect!")
@@ -70,18 +71,18 @@ async def suggest(ctx, suggestion = discord.Option(name='suggestion')):
     suggestion = suggestion.lower
     suggestions = {goodness:suggestion}
     await ctx.response.send_message('You suggested %s' % suggestion, ephemeral=True)
-    user = await bot.fetch_user('276152435175849985')
+    user = await bot.fetch_user(owner)
     await user.send(suggestions)
 
 
 
 ##Credit Command
 @bot.slash_command(name="get_credit", description="Get your current social credit")
-async def get_credit(ctx):
+async def get_credit(ctx,):
     auth = str(ctx.author)
     value = social_credits.get(auth)
     print(auth)
-    await ctx.respond('%You have s social credit' % (value), ephemeral=True)
+    await ctx.respond('You have %s social credit' % value, ephemeral=True)
 
 ##Leaderboard command
 @bot.slash_command(name="leaderboard", description="Show global social credit rankings")
