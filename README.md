@@ -6,7 +6,9 @@ DISCLAIMER: The terms in the "good" and "bad" field here are meant to mock the C
 
 Installation:
 
-Download everything
+Download and install py-cord
+
+Download all the files here 
 
 Create a discord application for your bot via the discord developer portal
 
