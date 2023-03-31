@@ -1,5 +1,6 @@
 # CCP-Social-Credit-discord
 A simple bot that mocks the CCP's Social credit system.
+Note that this project is a fun little thing that I work on sometimes so don't expect good documentation or frequent updates
 DISCLAIMER: The terms in the "good" and "bad" field here are meant to mock the CCP and in no way reflect the views of the author
 
 Installation:
